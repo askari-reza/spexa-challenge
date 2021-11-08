@@ -1,15 +1,16 @@
 <template>
   <v-app dark>
     <v-app-bar fixed app>
-      <v-toolbar-title v-text="title" />
-      <v-spacer />
+      <v-btn outlined @click="logout">Logout</v-btn>
+      <v-toolbar-title class="mx-2" v-text="userEmail"></v-toolbar-title>
+      <v-spacer></v-spacer>
     </v-app-bar>
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-   
+
     <v-footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -17,11 +18,14 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  data() {
-    return {
-      title: 'Spexa',
-    }
+  name: 'DefaultLayout',
+  computed: {
+    ...mapGetters(['userEmail']),
+  },
+  methods: {
+    ...mapActions('auth', ['logout']),
   },
 }
 </script>

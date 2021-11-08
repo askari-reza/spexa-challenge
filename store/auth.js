@@ -2,58 +2,52 @@
 export const state = () => ({
   userToken: localStorage.getItem('token'),
   isLoggedIn: localStorage.getItem('isLoggedIn'),
-  userEmail: null,
 })
 //* getters
 export const getters = {
   isLoggedIn: (state) => !!state.isLoggedIn,
   userToken: (state) => state.userToken,
-  userMobile: (state) => state.userMobile,
 }
 //* mutations
 export const mutations = {
-  setUserMobile(state, payload) {
-    state.userMobile = payload
-  },
   setToken(state, payload) {
     state.userToken = payload
   },
   setIsLoggedIn(state, payload) {
     state.isLoggedIn = payload
   },
-
 }
 //* actions
-export const actions =  {
-  async sendCode({ commit }, payload) {
-    // commit('setUserMobile', payload)
-    // await this.$axios.post(API.sendCode.path, {
-    //   mobile: payload,
-    // })
-  },
-  async login({ getters, commit, dispatch }, payload) {
+export const actions = {
+  async login({ commit }, payload) {
     //
-    // const res = await this.$axios.post(API.login.path, {
-    //   mobile: getters.userMobile,
-    //   code: payload,
-    // })
-    // const token = await res.data.data.access_token
-    // commit('setToken', token)
-    // localStorage.setItem('token', token)
-    // commit('setIsLoggedIn', true)
-    // localStorage.setItem('isLoggedIn', '1')
- 
+    const res = await this.$axios.post('/user/login', {
+      email: payload.email,
+      password: payload.password,
+    })
+    const data = await res.data.data
+    //
+    const rootDirectoryId = data.root_directory_id
+    commit('directory/setRootDirectoryId', rootDirectoryId, { root: true })
+    //
+    const token = data.access_token
+    commit('setToken', token)
+    localStorage.setItem('token', token)
+    //
+    commit('setIsLoggedIn', true)
+    localStorage.setItem('isLoggedIn', '1')
+    //
+    commit('setUserEmail', payload.email, { root: true })
   },
-  logOut({ commit }) {
+  logout({ commit }) {
     commit('setToken', null)
     commit('setIsLoggedIn', false)
     localStorage.removeItem('token')
     localStorage.removeItem('isLoggedIn')
-    localStorage.removeItem('profile')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('rootDirectoryId')
     // eslint-disable-next-line no-console
     console.log('LOGOUT')
-    this.$router.push('/')
+    this.$router.push({ name: 'login' })
   },
-
 }
-

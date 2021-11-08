@@ -5,7 +5,7 @@
       <v-spacer />
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container class="fill-height">
         <Nuxt />
       </v-container>
     </v-main>
