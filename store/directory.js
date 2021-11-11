@@ -1,5 +1,6 @@
 export const state = () => ({
   rootDirectoryId: localStorage.getItem('rootDirectoryId'),
+  currentDirectory: ''
 })
 
 export const getters = {
@@ -21,5 +22,8 @@ export const actions = {
       title: payload.title,
     })
     return res
+  },
+  async remove(_, payload) {
+    await this.$axios.delete(`/directory/${payload}`)
   },
 }

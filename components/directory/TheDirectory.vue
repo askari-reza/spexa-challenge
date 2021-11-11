@@ -1,33 +1,62 @@
 <template>
   <v-container>
-    <v-row v-if="noChild" justify="center">
+    <the-directory-loader v-if="loading"></the-directory-loader>
+    <v-row v-else-if="noChild" justify="center">
       <v-col cols="12" sm="6">
-        <no-child-directory @create-directory="add"></no-child-directory>
+        <no-child-directory></no-child-directory>
       </v-col>
     </v-row>
     <v-row v-else>
       <v-col v-for="directory in directories" :key="directory.id" cols="2">
-        <v-card hover @click="itemClick(directory)">
-          <div class="d-flex justify-end">
-            <v-menu offset-y>
-              <template #activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon large v-text="mdiDotsHorizontal"></v-icon>
+        <div class="d-flex justify-end">
+          <v-menu offset-y>
+            <template #activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon large v-text="mdiDotsHorizontal"></v-icon>
+              </v-btn>
+            </template>
+            <v-list>
+              <v-list-item>
+                <v-btn
+                  text
+                  :to="{
+                    name: 'directory-id',
+                    params: {
+                      id: directory.id,
+                    },
+                  }"
+                  target="_blank"
+                >
+                  <v-icon v-text="mdiOpenInNew"></v-icon>
+                  opne
                 </v-btn>
-              </template>
-              <v-list>
-                <v-list-item> 1 </v-list-item>
-              </v-list>
-            </v-menu>
-          </div>
+              </v-list-item>
+              <v-list-item>
+                <directory-delete-dialog
+                  :directory-id="directory.id"
+                  :directory-title="directory.title"
+                ></directory-delete-dialog>
+              </v-list-item>
+              <v-list-item> </v-list-item>
+            </v-list>
+          </v-menu>
+        </div>
+        <v-card
+          flat
+          :to="{
+            name: 'directory-id',
+            params: { id: directory.id },
+          }"
+        >
           <v-icon size="100%" color="secondary" v-text="mdiFolder"></v-icon>
           <div class="text-center" v-text="directory.title"></div>
         </v-card>
       </v-col>
       <v-col cols="2">
-        <v-card height="100%" @click="add">
+        <v-card flat height="100%">
           <v-card-text class="d-flex justify-center align-center fill-height">
-            <v-icon size="70%" color="secondary" v-text="mdiPlusThick"></v-icon>
+            <new-directory-form @form-submit="createDirectory">
+            </new-directory-form>
           </v-card-text>
         </v-card>
       </v-col>
@@ -36,39 +65,66 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
+import {
+  mdiFolder,
+  mdiDotsHorizontal,
+  mdiPlusThick,
+  mdiOpenInNew,
+  mdiTrashCan,
+} from '@mdi/js'
 
-import { mdiFolder, mdiDotsHorizontal, mdiPlusThick } from '@mdi/js'
 export default {
   name: 'TheDirectory',
   props: {
-    directories: {
-      type: Array,
-      requierd: true,
-      default() {
-        return []
-      },
+    directoryId: {
+      type: String,
+      required: true,
+      default: '',
     },
   },
   data() {
     return {
+      directories: [],
+      createDialog: false,
       mdiFolder,
       mdiDotsHorizontal,
       mdiPlusThick,
+      mdiOpenInNew,
+      mdiTrashCan,
     }
   },
+  async fetch() {
+    await this.getDirectory(this.directoryId)
+  },
   computed: {
+    ...mapGetters(['loading']),
     noChild() {
       return this.directories.length === 0
     },
   },
+
+  mounted() {},
   methods: {
-    ...mapActions('directory', ['create', 'get']),
-    itemClick(directory) {
-      this.$emit('item-click', directory)
+    ...mapActions('directory', ['create', 'get', 'remove']),
+    async createDirectory(title) {
+      await this.create({
+        id: this.directoryId,
+        title,
+      })
+      await this.getDirectory(this.directoryId)
     },
-    add() {
-      this.$emit('add-item')
+    async getDirectory(id) {
+      const res = await this.get(id)
+      const data = await res.data.data
+      this.directories = data.directories
+    },
+    async removeDirectory(id) {
+      await this.remove(id)
+      this.getDirectory(this.directoryId)
+    },
+    openDirectory(directory) {
+      this.getDirectory(directory.id)
     },
   },
 }
@@ -78,29 +134,5 @@ export default {
 .menu {
   position: relative;
   z-index: 2;
-}
-@keyframes change-width {
-  0% {
-    width: 0;
-  }
-  25% {
-    width: 25%;
-  }
-  50% {
-    width: 50%;
-  }
-  75% {
-    width: 75%;
-  }
-  100% {
-    width: 100%;
-  }
-}
-
-.dir-icon:hover::after {
-  content: '';
-  display: block;
-  border-bottom: 1px solid var(--v-secondary-base);
-  animation: change-width 0.3s ease-in-out forwards;
 }
 </style>
