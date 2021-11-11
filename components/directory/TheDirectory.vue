@@ -7,7 +7,7 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col v-for="directory in directories" :key="directory.id" cols="2">
+      <v-col v-for="directory in directories" :key="directory.id" cols="6" sm="2">
         <div class="d-flex justify-end">
           <v-menu offset-y>
             <template #activator="{ on, attrs }">
@@ -19,6 +19,7 @@
               <v-list-item>
                 <v-btn
                   text
+                  nuxt
                   :to="{
                     name: 'directory-id',
                     params: {
@@ -43,6 +44,7 @@
         </div>
         <v-card
           flat
+          nuxt
           :to="{
             name: 'directory-id',
             params: { id: directory.id },

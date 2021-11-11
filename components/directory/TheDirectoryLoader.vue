@@ -1,6 +1,6 @@
 <template>
   <v-row>
-    <v-col cols="2">
+    <v-col cols="6" sm="2">
       <v-card flat>
         <v-card-text>
           <v-skeleton-loader
