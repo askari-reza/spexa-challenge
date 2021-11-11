@@ -14,6 +14,7 @@
     <v-footer>
       <span>&copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
+    <app-snackbar></app-snackbar>
   </v-app>
 </template>
 
