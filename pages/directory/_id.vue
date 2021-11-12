@@ -8,9 +8,6 @@
 <script>
 export default {
   name: 'DirectoryId',
-  meta: {
-    requiresAuth: true,
-  },
   asyncData({ store, params, route }) {
     return {
       id: params.id,

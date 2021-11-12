@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import { mdiEyeOff, mdiEye } from '@mdi/js'
 export default {
   name: 'LoginForm',
@@ -64,8 +64,18 @@ export default {
     },
   },
   methods: {
-    submit() {
-      this.$emit('form-submit', this.user)
+    ...mapMutations({
+      setRootDirectoryId: 'directory/setRootDirectoryId',
+      setUserEmail: 'setUserEmail',
+    }),
+    async submit() {
+      const res = await this.$auth.loginWith('local', {
+        data: this.user,
+      })
+      const data = await res.data.data
+      this.setUserEmail(this.user.email)
+      this.setRootDirectoryId(data.root_directory_id)
+      this.$router.push('/')
     },
     showPassword() {
       this.passwordVisable = !this.passwordVisable

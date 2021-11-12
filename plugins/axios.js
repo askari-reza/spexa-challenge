@@ -1,19 +1,28 @@
 //
-export default ({ $axios, store, req, redirect, error: nuxtError }) => {
+export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
   //* onRequest
   $axios.onRequest((config) => {
     store.commit('setLoading', true)
-    //
-    // config.withCredentials = true
-    config.headers.Authorization = `Bearer ${store.getters['auth/userToken']}`
   })
   //
   //* onResponse
   $axios.onResponse((resp) => {
     store.commit('setLoading', false)
     //
+    if (resp.config.url === '/user/refresh') {
+      // eslint-disable-next-line no-console
+      console.log('token refresh')
+    }
     // eslint-disable-next-line no-console
-    console.log(resp)
+    // console.log(resp)
+    const message = resp.data.message
+    if (message) {
+      store.commit('setSnackbar', {
+        value: true,
+        message,
+        color: 'success',
+      })
+    }
   })
   //
   //* onError
@@ -21,14 +30,23 @@ export default ({ $axios, store, req, redirect, error: nuxtError }) => {
     store.commit('setLoading', false)
     //
     const code = parseInt(err.response && err.response.status)
-    // eslint-disable-next-line no-console
-    console.log('onError', err)
+    //
     if (code === 401) {
-      store.dispatch('auth/logout')
-      redirect({ name: 'login' })
+      // eslint-disable-next-line no-console
+      console.log('onError: 401')
+      redirect({ name: 'logout' })
+    } else {
+      // eslint-disable-next-line no-console
+      console.log('onError', err)
+      store.commit('setSnackbar', {
+        value: true,
+        message: err,
+        color: 'error',
+      })
+      // nuxtError(err.response)
+      // return Promise.resolve(false)
     }
-    nuxtError(err.response)
-    return Promise.resolve(false)
+    //
   })
   //* onRequest(config)
   //* onResponse(response)

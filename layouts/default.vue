@@ -7,6 +7,7 @@
     </v-app-bar>
     <v-main>
       <v-container>
+        <div v-if="$nuxt.isOffline">You are offline</div>
         <Nuxt />
       </v-container>
     </v-main>
@@ -27,6 +28,16 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['logout']),
+   async logout() {
+      //
+      // this.$auth.strategy.token.reset()
+      // this.$auth.strategy.refreshToken.reset()
+      // localStorage.clear()
+      //
+      // this.$router.push({ name: 'logout' })
+      await this.$auth.logout();
+ 
+    },
   },
 }
 </script>

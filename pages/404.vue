@@ -4,7 +4,8 @@
 
 <script>
 export default {
-  name: '404',
+  name: 'NotFound',
+  auth: false,
 }
 </script>
 
