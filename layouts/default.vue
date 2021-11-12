@@ -1,9 +1,12 @@
 <template>
   <v-app dark>
     <v-app-bar fixed app>
-      <v-btn outlined @click="logout">Logout</v-btn>
-      <v-toolbar-title class="mx-2" v-text="userEmail"></v-toolbar-title>
+      <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
+      <template v-if="$auth.loggedIn">
+        <v-btn outlined @click="logout">Logout</v-btn>
+        <span class="subtitle-1 mx-2" v-text="userEmail"></span>
+      </template>
       {{ $auth.loggedIn }}
     </v-app-bar>
     <v-main>
@@ -24,6 +27,11 @@
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'DefaultLayout',
+  data() {
+    return {
+      title: 'Spexa',
+    }
+  },
   computed: {
     ...mapGetters(['userEmail']),
   },

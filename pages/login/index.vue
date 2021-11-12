@@ -11,7 +11,6 @@
 <script>
 export default {
   name: 'Login',
-  layout: 'guest',
   middleware: 'guest',
 }
 </script>
