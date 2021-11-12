@@ -1,7 +1,7 @@
 <template>
-  <v-card>
+  <v-card flat>
     <v-card-text class="text-center">
-      <v-icon size="250" v-text="mdiFolderPlus"></v-icon>
+      <v-icon size="200" v-text="mdiFolderPlus"></v-icon>
        </v-card-text>
     <v-card-title class="justify-center">
       There is nothing to show

@@ -7,7 +7,12 @@
       </v-col>
     </v-row>
     <v-row v-else>
-      <v-col v-for="directory in directories" :key="directory.id" cols="6" sm="2">
+      <v-col
+        v-for="directory in directories"
+        :key="directory.id"
+        cols="6"
+        sm="2"
+      >
         <div class="d-flex justify-end">
           <v-menu offset-y>
             <template #activator="{ on, attrs }">
@@ -29,7 +34,7 @@
                   target="_blank"
                 >
                   <v-icon v-text="mdiOpenInNew"></v-icon>
-                  opne
+                  open
                 </v-btn>
               </v-list-item>
               <v-list-item>
@@ -38,13 +43,13 @@
                   :directory-title="directory.title"
                 ></directory-delete-dialog>
               </v-list-item>
-              <v-list-item> </v-list-item>
             </v-list>
           </v-menu>
         </div>
         <v-card
           flat
           nuxt
+          color="transparent"
           :to="{
             name: 'directory-id',
             params: { id: directory.id },
@@ -55,7 +60,7 @@
         </v-card>
       </v-col>
       <v-col cols="2">
-        <v-card flat height="100%">
+        <v-card flat height="100%" color="transparent">
           <v-card-text class="d-flex justify-center align-center fill-height">
             <new-directory-form @form-submit="createDirectory">
             </new-directory-form>

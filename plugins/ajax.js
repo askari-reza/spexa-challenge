@@ -37,6 +37,11 @@ export default ({ $axios, store, redirect }, inject) => {
       // eslint-disable-next-line no-console
       console.log('onError: 401')
       redirect({ name: 'logout' })
+    }
+    if (code === 404) {
+      // eslint-disable-next-line no-console
+      console.log('onError: 404')
+      redirect({ name: 'directory-not-exist' })
     } else {
       store.commit('setSnackbar', {
         value: true,

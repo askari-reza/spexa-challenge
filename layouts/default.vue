@@ -1,23 +1,15 @@
 <template>
   <v-app dark>
-    <v-app-bar fixed app>
-      <v-toolbar-title v-text="title" />
+    <v-app-bar v-if="$auth.loggedIn" fixed app flat>
+     <v-btn outlined @click="logout">Logout</v-btn>
+      <span class="subtitle-1 mx-2" v-text="userEmail"></span>
       <v-spacer></v-spacer>
-      <template v-if="$auth.loggedIn">
-        <span class="subtitle-1 mx-2" v-text="userEmail"></span>
-        <v-btn outlined @click="logout">Logout</v-btn>
-      </template>
     </v-app-bar>
-    <v-main>
-      <v-container>
-        <div v-if="$nuxt.isOffline">You are offline</div>
-        <Nuxt />
-      </v-container>
+    <v-main class="grey lighten-2">
+      <div v-if="$nuxt.isOffline">You are offline</div>
+      <nuxt></nuxt>
     </v-main>
 
-    <v-footer>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
     <app-snackbar></app-snackbar>
   </v-app>
 </template>

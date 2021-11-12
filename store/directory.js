@@ -5,11 +5,15 @@ export const state = () => ({
 
 export const getters = {
   rootDirectoryId: (state) => state.rootDirectoryId,
+  currentDirectory: (state) => state.currentDirectory,
 }
 export const mutations = {
   setRootDirectoryId(state, payload) {
     localStorage.setItem('rootDirectoryId', payload)
     state.rootDirectoryId = payload
+  },
+  setCurrentDirectory(state, payload) {
+    state.currentDirectory = payload
   },
 }
 export const actions = {

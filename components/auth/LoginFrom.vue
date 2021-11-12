@@ -1,6 +1,6 @@
 <template>
   <v-form ref="form" @submit.prevent="submit">
-    <v-card>
+    <v-card color="transparent" flat>
       <v-card-title class="justify-center">{{ title }}</v-card-title>
       <v-card-subtitle v-if="snackbar.value" class="text-center error--text">
         {{ snackbar.message }}

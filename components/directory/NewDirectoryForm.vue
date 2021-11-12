@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card flat @click="open">
+    <v-card flat color="transparent" @click="open">
       <slot name="activator">
         <v-icon size="100%" color="secondary" v-text="mdiPlusThick"></v-icon>
       </slot>
@@ -12,7 +12,7 @@
       transition="dialog-top-transition"
     >
       <v-form @submit.prevent="submit">
-        <v-card>
+        <v-card flat>
           <v-card-title class="text-uppercase">create directory</v-card-title>
           <v-card-text>
             <v-text-field

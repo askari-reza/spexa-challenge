@@ -11,14 +11,17 @@
         delete
       </v-btn>
     </template>
-    <v-card>
-      <v-card-title class="justify-center"> Are you sure? </v-card-title>
+    <v-card flat>
+      <v-card-title class="justify-center text-capitalize">
+        delete directory
+      </v-card-title>
       <v-card-text>
-        You are delteting {{ directoryTitle }} and all contents!
+        Are you sure want delete
+        <span class="font-weight-bold">{{ directoryTitle }}</span> directory?
       </v-card-text>
       <v-card-actions class="justify-space-around">
         <v-btn color="secondary" outlined @click="close">cancel</v-btn>
-        <v-btn color="error" @click="removeDirectory">
+        <v-btn color="secondary" @click="removeDirectory">
           <v-icon v-text="mdiTrashCan"></v-icon>
           delete
         </v-btn>

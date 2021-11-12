@@ -8,8 +8,14 @@
 <script>
 export default {
   name: 'DirectoryId',
-   middleware: 'auth',
-  asyncData({ store, params, route }) {
+  middleware: [
+    'auth',
+    ({ params, store }) => {
+      store.commit('directory/setCurrentDirectory', params.id)
+    },
+  ],
+  asyncData({ params, store }) {
+    store.dispatch('directory/setCurrentDirectory', params.id)
     return {
       id: params.id,
     }
