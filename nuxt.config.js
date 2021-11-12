@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - spexa-challenge',
+    titleTemplate: '%s | spexa-challenge',
     title: 'spexa-challenge',
     htmlAttrs: {
       lang: 'en',
@@ -26,7 +26,11 @@ export default {
   css: ['~/assets/styles/global.scss'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/axios', '~/plugins/errors'],
+  plugins: [
+    // '~/plugins/axios',
+    '~/plugins/ajax',
+    '~/plugins/errors',
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: [
@@ -73,7 +77,6 @@ export default {
           user: false,
         },
         redirect: false,
-       
       },
     },
   },

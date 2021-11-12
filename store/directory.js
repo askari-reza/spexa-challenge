@@ -1,6 +1,6 @@
 export const state = () => ({
   rootDirectoryId: localStorage.getItem('rootDirectoryId'),
-  currentDirectory: ''
+  currentDirectory: '',
 })
 
 export const getters = {
@@ -14,16 +14,26 @@ export const mutations = {
 }
 export const actions = {
   async get(_, payload) {
-    const res = await this.$axios.get(`/directory/${payload}`)
+    const res = await this.$ajax({
+      method: 'get',
+      url: `/directory/${payload}`,
+    })
     return res
   },
   async create(_, payload) {
-    const res = await this.$axios.post(`/directory/${payload.id}`, {
-      title: payload.title,
+    const res = await this.$ajax({
+      method: 'post',
+      url: `/directory/${payload.id}`,
+      data: {
+        title: payload.title,
+      },
     })
     return res
   },
   async remove(_, payload) {
-    await this.$axios.delete(`/directory/${payload}`)
+    await this.$ajax({
+      method: 'delete',
+      url: `/directory/${payload}`,
+    })
   },
 }
