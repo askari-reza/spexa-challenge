@@ -5,7 +5,6 @@
 <script>
 export default {
   name: 'NotFound',
-  auth: false,
 }
 </script>
 

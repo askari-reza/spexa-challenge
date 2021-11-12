@@ -4,6 +4,7 @@
       <v-btn outlined @click="logout">Logout</v-btn>
       <v-toolbar-title class="mx-2" v-text="userEmail"></v-toolbar-title>
       <v-spacer></v-spacer>
+      {{ $auth.loggedIn }}
     </v-app-bar>
     <v-main>
       <v-container>
@@ -28,15 +29,9 @@ export default {
   },
   methods: {
     ...mapActions('auth', ['logout']),
-   async logout() {
-      //
-      // this.$auth.strategy.token.reset()
-      // this.$auth.strategy.refreshToken.reset()
-      // localStorage.clear()
-      //
-      // this.$router.push({ name: 'logout' })
-      await this.$auth.logout();
- 
+    async logout() {
+      await this.$auth.logout()
+      this.$router.push({ name: 'login' })
     },
   },
 }

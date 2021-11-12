@@ -4,21 +4,12 @@
 <script>
 export default {
   name: 'Logout',
-  auth: false,
   layout: 'guest',
-  async middleware({ store, redirect, $auth }) {
+  // middleware: 'guest',
+  async middleware({ redirect, $auth }) {
     await $auth.logout()
-    // eslint-disable-next-line no-console
-    console.log('Logged Out')
-
-    return redirect({
-      name: 'index',
-    })
+    return redirect('/')
   },
-  // async mounted() {
-  //   // eslint-disable-next-line no-console
-  //   console.log('Logged Out')
-  // },
 }
 </script>
 

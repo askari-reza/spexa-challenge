@@ -58,7 +58,7 @@ export default {
         token: {
           property: 'data.access_token',
           global: true,
-          // maxAge: 1800,
+          maxAge: 15,
           // required: true,
         },
         refreshToken: {
@@ -73,6 +73,7 @@ export default {
           user: false,
         },
         redirect: false,
+       
       },
     },
   },
@@ -109,7 +110,7 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
   router: {
-    middleware: ['auth'],
+    middleware: ['general'],
     extendRoutes(routes, resolve) {
       routes.push({
         name: 'NotFound',

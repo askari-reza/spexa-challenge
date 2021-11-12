@@ -4,6 +4,7 @@ export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
   $axios.onRequest((config) => {
     store.commit('clearSnackbar')
     store.commit('setLoading', true)
+ 
   })
   //
   //* onResponse
@@ -39,8 +40,7 @@ export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
       // eslint-disable-next-line no-console
       console.log('onError: 401')
       redirect({ name: 'logout' })
-    }
-    if (message) {
+    } else if (message) {
       store.commit('setSnackbar', {
         value: true,
         message,

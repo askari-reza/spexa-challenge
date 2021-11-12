@@ -8,6 +8,7 @@
 <script>
 export default {
   name: 'DirectoryId',
+   middleware: 'auth',
   asyncData({ store, params, route }) {
     return {
       id: params.id,
