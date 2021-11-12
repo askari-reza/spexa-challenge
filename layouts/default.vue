@@ -4,10 +4,9 @@
       <v-toolbar-title v-text="title" />
       <v-spacer></v-spacer>
       <template v-if="$auth.loggedIn">
-        <v-btn outlined @click="logout">Logout</v-btn>
         <span class="subtitle-1 mx-2" v-text="userEmail"></span>
+        <v-btn outlined @click="logout">Logout</v-btn>
       </template>
-      {{ $auth.loggedIn }}
     </v-app-bar>
     <v-main>
       <v-container>
