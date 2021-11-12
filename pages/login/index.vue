@@ -12,7 +12,7 @@
 
 export default {
   name: 'Login',
-  layout: 'auth',
+  layout: 'guest',
   middleware: ['guest'],
 }
 </script>

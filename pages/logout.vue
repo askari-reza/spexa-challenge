@@ -5,7 +5,7 @@
 export default {
   name: 'Logout',
   auth: false,
-  layout: 'auth',
+  layout: 'guest',
   async middleware({ store, redirect, $auth }) {
     await $auth.logout()
     // eslint-disable-next-line no-console

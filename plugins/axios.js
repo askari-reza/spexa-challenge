@@ -2,6 +2,7 @@
 export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
   //* onRequest
   $axios.onRequest((config) => {
+    store.commit('clearSnackbar')
     store.commit('setLoading', true)
   })
   //
@@ -14,7 +15,7 @@ export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
       console.log('token refresh')
     }
     // eslint-disable-next-line no-console
-    // console.log(resp)
+    console.log(resp)
     const message = resp.data.message
     if (message) {
       store.commit('setSnackbar', {
@@ -30,21 +31,24 @@ export default ({ $axios, app, store, req, redirect, error: nuxtError }) => {
     store.commit('setLoading', false)
     //
     const code = parseInt(err.response && err.response.status)
+    const message = err.response.data.message
+    // eslint-disable-next-line no-console
+    console.log(message)
     //
     if (code === 401) {
       // eslint-disable-next-line no-console
       console.log('onError: 401')
       redirect({ name: 'logout' })
-    } else {
-      // eslint-disable-next-line no-console
-      console.log('onError', err)
+    }
+    if (message) {
       store.commit('setSnackbar', {
         value: true,
-        message: err,
+        message,
         color: 'error',
       })
-      // nuxtError(err.response)
-      // return Promise.resolve(false)
+    } else {
+      nuxtError(err)
+      return Promise.resolve(false)
     }
     //
   })

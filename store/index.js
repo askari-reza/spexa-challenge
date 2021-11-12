@@ -29,6 +29,13 @@ export const mutations = {
   setSnackbar(state, payload) {
     state.snackbar = payload
   },
+  clearSnackbar(state) {
+    state.snackbar = {
+      value: false,
+      message: '',
+      color: '',
+    }
+  },
 }
 export const actions = {
   // async nuxtServerInit({ dispatch }, { $axios }) {},

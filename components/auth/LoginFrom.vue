@@ -1,7 +1,10 @@
 <template>
-  <v-form @submit.prevent="submit">
+  <v-form ref="form" @submit.prevent="submit">
     <v-card>
       <v-card-title class="justify-center">{{ title }}</v-card-title>
+      <v-card-subtitle v-if="snackbar.value" class="text-center error--text">
+        {{ snackbar.message }}
+      </v-card-subtitle>
       <v-card-text>
         <v-text-field
           v-model="user.email"
@@ -53,7 +56,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['loading']),
+    ...mapGetters(['loading', 'snackbar']),
     passwordIcon() {
       if (!this.user.password) {
         return ''
@@ -69,13 +72,15 @@ export default {
       setUserEmail: 'setUserEmail',
     }),
     async submit() {
-      const res = await this.$auth.loginWith('local', {
-        data: this.user,
-      })
-      const data = await res.data.data
-      this.setUserEmail(this.user.email)
-      this.setRootDirectoryId(data.root_directory_id)
-      this.$router.push('/')
+      if (this.$refs.form.validate()) {
+        const res = await this.$auth.loginWith('local', {
+          data: this.user,
+        })
+        const data = await res.data.data
+        this.setUserEmail(this.user.email)
+        this.setRootDirectoryId(data.root_directory_id)
+        this.$router.push('/')
+      }
     },
     showPassword() {
       this.passwordVisable = !this.passwordVisable
