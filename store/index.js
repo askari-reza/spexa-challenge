@@ -1,7 +1,6 @@
 export const state = () => ({
   loading: false,
   userEmail: localStorage.getItem('userEmail'),
-  breadcrumbs: [],
   snackbar: {
     value: false,
     message: '',
@@ -12,7 +11,6 @@ export const state = () => ({
 export const getters = {
   loading: (state) => state.loading,
   userEmail: (state) => state.userEmail,
-  breadcrumbs: (state) => state.breadcrumbs,
   snackbar: (state) => state.snackbar,
 }
 export const mutations = {
@@ -23,9 +21,7 @@ export const mutations = {
     localStorage.setItem('userEmail', payload)
     state.userEmail = payload
   },
-  setBreadcrumbs(state, payload) {
-    state.breadcrumbs.push(payload)
-  },
+
   setSnackbar(state, payload) {
     state.snackbar = payload
   },
