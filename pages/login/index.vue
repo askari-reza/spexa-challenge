@@ -13,8 +13,7 @@ export default {
   name: 'Login',
   middleware: 'guest',
   async asyncData({ $ajax }) {
-    // eslint-disable-next-line no-console
-    const res = await $ajax({
+   await $ajax({
       method: 'post',
       url: '/user/login',
       data: {
