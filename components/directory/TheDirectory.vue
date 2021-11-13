@@ -55,13 +55,13 @@
             name: 'directory-id',
             params: { id: directory.id },
           }"
-          @click="addToBreadcrumbs(directory)"
+          @click.capture="addToBreadcrumbs(directory)"
         >
           <v-icon size="100%" color="secondary" v-text="mdiFolder"></v-icon>
           <div class="text-center" v-text="directory.title"></div>
         </v-card>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="6" sm="2">
         <v-card flat height="100%" color="transparent">
           <v-card-text class="d-flex justify-center align-center fill-height">
             <new-directory-form @form-submit="createDirectory">
@@ -123,6 +123,7 @@ export default {
       await this.getDirectory(this.directoryId)
     },
     async getDirectory(id) {
+      //
       const res = await this.get(id)
       const data = await res.data.data
       this.directories = data.directories

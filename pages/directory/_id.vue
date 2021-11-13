@@ -14,8 +14,7 @@ export default {
       store.commit('directory/setCurrentDirectory', params.id)
     },
   ],
-  asyncData({ params, store }) {
-    store.dispatch('directory/setCurrentDirectory', params.id)
+  asyncData({ params }) {
     return {
       id: params.id,
     }
