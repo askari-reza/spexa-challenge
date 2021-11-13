@@ -1,11 +1,15 @@
 export const state = () => ({
   rootDirectoryId: localStorage.getItem('rootDirectoryId'),
   currentDirectory: '',
+  breadcrumbs: [],
+
 })
 
 export const getters = {
   rootDirectoryId: (state) => state.rootDirectoryId,
   currentDirectory: (state) => state.currentDirectory,
+  breadcrumbs: (state) => state.breadcrumbs,
+
 }
 export const mutations = {
   setRootDirectoryId(state, payload) {
@@ -14,6 +18,9 @@ export const mutations = {
   },
   setCurrentDirectory(state, payload) {
     state.currentDirectory = payload
+  },
+  setBreadcrumbs(state, payload) {
+    state.breadcrumbs.push(payload)
   },
 }
 export const actions = {

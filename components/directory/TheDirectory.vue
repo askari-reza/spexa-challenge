@@ -32,6 +32,7 @@
                     },
                   }"
                   target="_blank"
+                  @click="addToBreadcrumbs(directory)"
                 >
                   <v-icon v-text="mdiOpenInNew"></v-icon>
                   open
@@ -54,6 +55,7 @@
             name: 'directory-id',
             params: { id: directory.id },
           }"
+          @click="addToBreadcrumbs(directory)"
         >
           <v-icon size="100%" color="secondary" v-text="mdiFolder"></v-icon>
           <div class="text-center" v-text="directory.title"></div>
@@ -72,7 +74,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapMutations, mapGetters } from 'vuex'
 import {
   mdiFolder,
   mdiDotsHorizontal,
@@ -110,10 +112,9 @@ export default {
       return this.directories.length === 0
     },
   },
-
-  mounted() {},
   methods: {
     ...mapActions('directory', ['create', 'get', 'remove']),
+    ...mapMutations('directory', ['setBreadcrumbs']),
     async createDirectory(title) {
       await this.create({
         id: this.directoryId,
@@ -132,6 +133,9 @@ export default {
     },
     openDirectory(directory) {
       this.getDirectory(directory.id)
+    },
+    addToBreadcrumbs(directory) {
+      this.setBreadcrumbs(directory)
     },
   },
 }
