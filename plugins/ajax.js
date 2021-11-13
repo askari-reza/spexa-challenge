@@ -10,12 +10,7 @@ export default ({ $axios, store, redirect }, inject) => {
   $axios.onResponse((resp) => {
     store.commit('setLoading', false)
     //
-    if (resp.config.url === '/user/refresh') {
-      // eslint-disable-next-line no-console
-      console.log('token refresh')
-    }
-    // eslint-disable-next-line no-console
-    console.log(resp)
+   
     const message = resp.data.message
     if (message) {
       store.commit('setSnackbar', {
@@ -34,13 +29,11 @@ export default ({ $axios, store, redirect }, inject) => {
     const message = err.response.data.message
     //
     if (code === 401) {
-      // eslint-disable-next-line no-console
-      console.log('onError: 401')
+    
       redirect({ name: 'logout' })
     }
     if (code === 404) {
-      // eslint-disable-next-line no-console
-      console.log('onError: 404')
+    
       redirect({ name: 'directory-not-exist' })
     } else {
       store.commit('setSnackbar', {

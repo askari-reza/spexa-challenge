@@ -22,8 +22,7 @@ export default {
         password: '123',
       },
     })
-    // eslint-disable-next-line no-console
-    console.log(res)
+
   },
 }
 </script>
